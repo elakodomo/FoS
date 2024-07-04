@@ -1,10 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_2018_4_OR_NEWER
-using UnityEngine.Networking;
-#endif
-using UnityEngine.UI;
 
 public class WebViewSample : MonoBehaviour
 {
@@ -20,8 +16,29 @@ public class WebViewSample : MonoBehaviour
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
         webViewObject.bitmapRefreshCycle = 1;
 #endif
-        webViewObject.LoadURL("https://www.google.co.jp");
-
+        // お好きなMarginにしてください
+        webViewObject.SetMargins(100, 100, 100, 100);
         webViewObject.SetVisibility(true);
+        // お好きなURLにしてください
+        webViewObject.LoadURL("https://www.google.co.jp");
+    }
+
+    void OnGUI()
+    {
+        GUI.enabled = webViewObject.CanGoBack();
+        if (GUI.Button(new Rect(10, 10, 80, 80), "<"))
+        {
+            // ブラウザ：前のページへ
+            webViewObject.GoBack();
+        }
+        GUI.enabled = true;
+
+        GUI.enabled = webViewObject.CanGoForward();
+        if (GUI.Button(new Rect(100, 10, 80, 80), ">"))
+        {
+            // ブラウザ：次のページへ
+            webViewObject.GoForward();
+        }
+        GUI.enabled = true;
     }
 }
