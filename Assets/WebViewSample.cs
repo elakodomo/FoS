@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WebViewSample : MonoBehaviour
 {
     WebViewObject webViewObject;
+    InputField inputField;
 
     void Start()
     {
+        inputField = GameObject.Find("InputField").GetComponent<InputField>();
         webViewObject = (new GameObject("WebViewObject")).AddComponent<WebViewObject>();
         webViewObject.Init(
             ld: (msg) => Debug.Log(string.Format("CallOnLoaded[{0}]", msg)),
@@ -40,5 +43,12 @@ public class WebViewSample : MonoBehaviour
             webViewObject.GoForward();
         }
         GUI.enabled = true;
+    }
+
+    public void One()
+    {
+        string name = inputField.text;
+        webViewObject.LoadURL(name);
+        Debug.Log(name);
     }
 }
